@@ -1,0 +1,11 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  jobs:
+    create:
+      employer_not_found:                         "Please check your employer login credentials or register as a new employer."
+
+  flash:
+    invalid_login:                                "Please check your login credentials."
+    signed_in:                                    "You signed in successfully."

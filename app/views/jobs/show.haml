@@ -1,0 +1,26 @@
+- content_for :sidebar do
+  .well.well-small
+    %ul.unstyled.asides
+      %li
+        %strong Views:
+        = @job.views.count
+      %li
+        %strong Last view:
+        = "#{time_ago_in_words(@job.views.last.created_at)} ago"
+      %li
+        %strong Posted on:
+        = @job.created_at.to_formatted_s(:short)
+%h2= @job.title
+%small= "at #{link_to @job.employer.email, employer_path(@job.employer)} in #{@job.location}".html_safe
+%hr
+%dl.dl-horizontal
+  %dt Category
+  %dd= @job.category.name
+  %dt About this job
+  %dd= RedCloth.new(@job.about_this_job).to_html.html_safe
+  %dt Requirements
+  %dd= RedCloth.new(@job.requirements).to_html.html_safe
+  %dt How to apply
+  %dd= RedCloth.new(@job.how_to_apply).to_html.html_safe
+
+= link_to "Apply now", "#", class: "btn btn-large btn-primary"

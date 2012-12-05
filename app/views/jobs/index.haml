@@ -1,0 +1,10 @@
+%h2 Featured jobs
+.row
+  = render partial: "jobs/featured_job", collection: @featured_jobs
+.row
+  .span2.pull-right
+    %a.btn.btn-primary.pull-right 200+ more
+%hr
+%h2= @title
+.row
+  = render @jobs

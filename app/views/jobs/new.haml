@@ -1,0 +1,35 @@
+%h2 Publish your job
+= simple_form_for @job, html: { class: "form-horizontal" } do |f|
+  = f.input :title, input_html: { class: "span6" }
+  = f.input :about_this_job, input_html: { class: "span6", rows: 5 }
+  = f.input :requirements, input_html: { class: "span6", rows: 5 }
+  = f.input :how_to_apply, input_html: { class: "span6", rows: 5 }
+  = f.input :location, input_html: { class: "span4" }
+  = f.input :start_date
+  = f.association :category
+  %hr
+  .row
+    - flash.each do |k,v|
+      #div{class: "span8 alert alert-#{k}"}
+        = v
+  - if current_employer
+    = "Signed in as #{current_employer.email}"
+  - else
+    %h4 Log in with your employer profile:
+    = f.simple_fields_for :employer do |employer_form|
+      = employer_form.input :email
+      = employer_form.input :password
+    %hr
+    %h4 Or create a new one:
+    = f.simple_fields_for :new_employer, html: { class: "form-horizontal" } do |employer_form|
+      - unless @new_employer.nil?
+        = employer_form.input :email, input_html: { value: @new_employer.email }
+        = employer_form.input :password, input_html: { value: @new_employer.password }
+        = employer_form.input :password_confirmation, input_html: { value: @new_employer.password_confirmation }
+      - else
+        = employer_form.input :email
+        = employer_form.input :password
+        = employer_form.input :password_confirmation
+
+  .form-actions
+    = f.submit class: "btn btn-primary"

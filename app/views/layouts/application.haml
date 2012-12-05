@@ -1,0 +1,54 @@
+!!!5
+%html
+  %head
+    %title CareerGeek JOBS
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tag
+  %body
+    .container.spaced-top
+      .row
+        .span12
+          %h1= image_tag "careergeek_logo_plain.png"
+      .row
+        .span12
+          - if current_employer
+            = "Signed in as #{current_employer.email}. Not #{current_employer.email}?"
+            = link_to "Log out", session_path(current_employer), method: :delete
+      .navbar.navbar-inverse.spaced-top
+        .navbar-inner
+          .container
+            %a{ class: "btn btn-navbar", data: { toggle: "collapse", target: ".nav-collapse"}}
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            #div{class: "nav-collapse navbar-inverse-collapse collapse", data: { target: ".navbar-inverse-collapse"} }
+              %ul.nav
+                %li.active= link_to "Home"
+                %li= link_to "Publish job", new_job_path
+                %li= link_to "Help"
+                %li= link_to "Contact us"
+                %li= link_to "Sign in", new_session_path
+              %form.navbar-search.pull-right
+                %input.search-query{placeholder: "Search"}
+      .row
+        - flash.each do |k,v|
+          #div{class: "span8 alert alert-#{k}"}
+            = v
+      .row
+        .span9
+          = yield
+        .span3
+          %p= link_to "Add your job for free", new_job_path, class: "btn btn-success btn-large btn-block"
+          = yield :sidebar
+          %ul.nav.nav-list.well
+            %li.nav-header Categories
+            %li.active= link_to "All jobs"
+            %li= link_to "Business", jobs_path(category: "Business")
+            %li= link_to "Design & Art", jobs_path(category: "Design & Art")
+            %li= link_to "Engineering", jobs_path(category: "Engineering")
+            %li= link_to "Finance", jobs_path(category: "Finance")
+            %li= link_to "IT", jobs_path(category: "IT")
+            %li= link_to "Marketing", jobs_path(category: "Marketing")
+            %li= link_to "PR", jobs_path(category: "PR")
+            %li= link_to "Other", jobs_path(category: "Other")
