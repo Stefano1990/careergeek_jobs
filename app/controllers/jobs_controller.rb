@@ -4,7 +4,7 @@ class JobsController < ApplicationController
     if params[:category]
       category = Category.find_by_name(params[:category])
       @jobs = Job.where(category_id: category.id)
-      @title = "Jobs in #{category.name}"
+      @title = "Found #{@jobs.count} Jobs in #{category.name}"
     else
       @jobs = Job.all
       @title = "Latest jobs"

@@ -24,13 +24,13 @@
               %span.icon-bar
             #div{class: "nav-collapse navbar-inverse-collapse collapse", data: { target: ".navbar-inverse-collapse"} }
               %ul.nav
-                %li.active= link_to "Home"
+                %li.active= link_to "Home", root_path
                 %li= link_to "Publish job", new_job_path
-                %li= link_to "Help"
-                %li= link_to "Contact us"
+                %li= link_to "Help", root_path
+                %li= link_to "Contact us", root_path
                 %li= link_to "Sign in", new_session_path
               %form.navbar-search.pull-right
-                %input.search-query{placeholder: "Search"}
+                %input.search-query{ placeholder: "Search" }
       .row
         - flash.each do |k,v|
           #div{class: "span8 alert alert-#{k}"}
