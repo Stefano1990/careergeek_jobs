@@ -3,3 +3,4 @@
     %h3= job.title
     %small= job.created_at
   = RedCloth.new(job.about_this_job).to_html.html_safe
+  = link_to "Read more", job_path(job), class: "btn"
