@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
   def current_employer
     if session[:employer_id]
       if Employer.find_by_id(session[:employer_id])

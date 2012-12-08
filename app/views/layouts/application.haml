@@ -6,6 +6,7 @@
     = javascript_include_tag "application"
     = csrf_meta_tag
   %body
+    #fb-root
     .container.spaced-top
       .row
         .span12
@@ -25,6 +26,7 @@
             #div{class: "nav-collapse navbar-inverse-collapse collapse", data: { target: ".navbar-inverse-collapse"} }
               %ul.nav
                 %li.active= link_to "Home", root_path
+                %li= link_to "About", about_path
                 %li= link_to "Publish job", new_job_path
                 %li= link_to "Help", root_path
                 %li= link_to "Contact us", root_path
@@ -41,14 +43,18 @@
         .span3
           %p= link_to "Add your job for free", new_job_path, class: "btn btn-success btn-large btn-block"
           = yield :sidebar
+          = link_to image_tag("http://www.careergeekblog.com/wp-content/uploads/2012/02/careergeeklogo1.jpg"), "http://www.careergeekblog.com"
+          = blog_last_posts
           %ul.nav.nav-list.well
             %li.nav-header Categories
-            %li.active= link_to "All jobs"
-            %li= link_to "Business", jobs_path(category: "Business")
-            %li= link_to "Design & Art", jobs_path(category: "Design & Art")
-            %li= link_to "Engineering", jobs_path(category: "Engineering")
-            %li= link_to "Finance", jobs_path(category: "Finance")
-            %li= link_to "IT", jobs_path(category: "IT")
-            %li= link_to "Marketing", jobs_path(category: "Marketing")
-            %li= link_to "PR", jobs_path(category: "PR")
-            %li= link_to "Other", jobs_path(category: "Other")
+            = category_link("All jobs", jobs_path)
+            = category_link("Business")
+            = category_link("Design & Art")
+            = category_link("Engineering")
+            = category_link("Finance")
+            = category_link("IT")
+            = category_link("Marketing")
+            = category_link("PR")
+            = category_link("Other")
+
+          .fb-like{ data: { send: false, show_faces: true }}
