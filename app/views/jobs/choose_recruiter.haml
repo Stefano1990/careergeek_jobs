@@ -6,14 +6,14 @@
     = recruiter_form.input :password
   %hr
   %h4 Or create a new one:
-  = f.simple_fields_for :new_recruiter, html: { class: "form-horizontal" } do |recruiter_form|
-    - unless @new_recruiter.nil?
-      = recruiter_form.input :email, input_html: { value: @new_recruiter.email }
-      = recruiter_form.input :password, input_html: { value: @new_recruiter.password }
-      = recruiter_form.input :password_confirmation, input_html: { value: @new_recruiter.password_confirmation }
-    - else
-      = recruiter_form.input :email
-      = recruiter_form.input :password
-      = recruiter_form.input :password_confirmation
+  = f.simple_fields_for :new_recruiter, html: { class: "form-horizontal" } do |f|
+    = f.input :name
+    = f.input :surname
+    = f.input :company
+    = f.input :city
+    = f.input :country
+    = f.input :email
+    = f.input :password
+    = f.input :password_confirmation
   .form-actions
     = f.submit
