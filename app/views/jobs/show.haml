@@ -11,7 +11,7 @@
         %strong Posted on:
         = @job.created_at.to_formatted_s(:short)
 %h2= @job.title
-%small= "at #{link_to @job.employer.email, employer_path(@job.employer)} in #{@job.location}".html_safe
+%small= "at #{link_to @job.recruiter.email, recruiter_path(@job.recruiter)} in #{@job.location}".html_safe unless @job.recruiter.nil?
 %hr
 %dl.dl-horizontal
   %dt Category
