@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204201953) do
+ActiveRecord::Schema.define(:version => 20130215214436) do
+
+  create_table "candidates", :force => true do |t|
+    t.string   "name"
+    t.string   "surname"
+    t.string   "email"
+    t.string   "city"
+    t.string   "country"
+    t.string   "linkedin"
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -19,25 +31,30 @@ ActiveRecord::Schema.define(:version => 20121204201953) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "employers", :force => true do |t|
-    t.string   "email"
-    t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "name"
-  end
-
   create_table "jobs", :force => true do |t|
     t.string   "title"
     t.string   "location"
     t.date     "start_date"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.integer  "employer_id"
     t.text     "about_this_job"
     t.text     "requirements"
     t.text     "how_to_apply"
     t.integer  "category_id"
+    t.date     "application_deadline"
+  end
+
+  create_table "recruiters", :force => true do |t|
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "name"
+    t.string   "surname"
+    t.string   "city"
+    t.string   "country"
+    t.string   "company"
   end
 
   create_table "users", :force => true do |t|

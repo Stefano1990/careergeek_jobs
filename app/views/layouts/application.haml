@@ -9,13 +9,23 @@
     #fb-root
     .container.spaced-top
       .row
-        .span12
+        .span6
           %h1= image_tag "careergeek_logo_plain.png"
+        - unless current_recruiter or current_candidate
+          .span6
+            = form_tag sessions_path, class: "simple_form form form-inline pull-right", id: "login" do
+              %input{id: "email", name: "email", type: "email", placeholder: "Email", class: "input-large"}
+              %input{id: "password", name: "password", type: "password", placeholder: "Password", class: "input-large"}
+              = submit_tag "Log in", class: "btn btn-primary"
+            .pull-right
+              = link_to "Register", new_candidate_path
+              |
+              = link_to "Forgotten Password", "#"
       .row
         .span12
-          - if current_employer
-            = "Signed in as #{current_employer.email}. Not #{current_employer.email}?"
-            = link_to "Log out", session_path(current_employer), method: :delete
+          - if current_recruiter
+            = "Signed in as #{current_recruiter.email}. Not #{current_recruiter.email}?"
+            = link_to "Log out", session_path(current_recruiter), method: :delete
       .navbar.navbar-inverse.spaced-top
         .navbar-inner
           .container
@@ -26,17 +36,17 @@
             #div{class: "nav-collapse navbar-inverse-collapse collapse", data: { target: ".navbar-inverse-collapse"} }
               %ul.nav
                 %li.active= link_to "Home", root_path
-                %li= link_to "About", about_path
-                %li= link_to "Publish job", new_job_path
-                %li= link_to "Help", root_path
-                %li= link_to "Contact us", root_path
-                %li= link_to "Sign in", new_session_path
+                %li= link_to "Add a job", new_job_path
+                %li= link_to "Career Advice", new_job_path
+                %li= link_to "About", root_path
+                %li= link_to "Candidates", new_candidate_path
+                %li= link_to "Recruiters", new_recruiter_path
+
               %form.navbar-search.pull-right
                 %input.search-query{ placeholder: "Search" }
-      .row
-        - flash.each do |k,v|
-          #div{class: "span8 alert alert-#{k}"}
-            = v
+      - flash.each do |k,v|
+        #div{class: "alert alert-#{k}"}
+          = v
       .row
         .span9
           = yield
@@ -56,5 +66,7 @@
             = category_link("Marketing")
             = category_link("PR")
             = category_link("Other")
-
-          .fb-like{ data: { send: false, show_faces: true }}
+          -#.fb-like{ data: { send: false, show_faces: true }}
+    #footer
+      .container
+        = render "shared/footer"

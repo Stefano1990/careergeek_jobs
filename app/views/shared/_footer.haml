@@ -1,0 +1,30 @@
+.row
+  .span3
+    %h4 Contact
+    = mail_to "faizan@careergeekblog.com"
+    %hr
+    %h5 Sign up to our Newsletter
+    .input-append
+      = text_field_tag :email
+      %button.btn Go!
+  .span3
+    %h4 Recruiters
+    %ul.unstyled
+      %li= link_to "Login", "#"
+      %li= link_to "Register", "#"
+      %li= link_to "Add a job", "#"
+      %li= link_to "Why choose us", "#"
+  .span3
+    %h4 Candidates
+    %ul.unstyled
+      %li= link_to "Login", "#"
+      %li= link_to "Register", "#"
+      %li= link_to "Career Advice", "#"
+      %li= link_to "Why choose us", "#"
+  .span3
+    %h4 Social Tools
+    %ul.unstyled
+      %li= link_to "Facebook", "#"
+      %li= link_to "Twitter", "#"
+      %li= link_to "Pinterest", "#"
+      %li= link_to "Tumbler", "#"

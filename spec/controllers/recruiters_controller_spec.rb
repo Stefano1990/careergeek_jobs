@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EmployersController do
+describe RecruitersController do
 
   describe "GET 'new'" do
     it "returns http success" do

@@ -1,0 +1,14 @@
+.hero-unit
+  %h1 Register
+  %p Because Career Geek JOBS so good and everything! It's like the best thing since sliced bread!
+= simple_form_for @recruiter, html: { class: "form-horizontal" } do |f|
+  = f.input :name
+  = f.input :surname
+  = f.input :company
+  = f.input :city
+  = f.input :country
+  = f.input :email
+  = f.input :password
+  = f.input :password_confirmation
+  .form-actions
+    = f.submit class: "btn btn-success"

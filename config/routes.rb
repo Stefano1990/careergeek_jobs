@@ -1,8 +1,12 @@
 CareergeekJobs::Application.routes.draw do
-  resources :employers, :jobs, :sessions
+  resources :recruiters, :sessions, :candidates
   root to: "jobs#index"
 
   get "about" => "pages#about"
+
+  resources :jobs do
+    match "choose_recruiter", :as => "choose_recruiter"
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

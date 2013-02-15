@@ -1,15 +1,28 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  def current_employer
-    if session[:employer_id]
-      if Employer.find_by_id(session[:employer_id])
-        @current_employer ||= Employer.find(session[:employer_id])
+  def current_recruiter
+    if session[:recruiter_id]
+      if Recruiter.find_by_id(session[:recruiter_id])
+        @current_recruiter ||= Recruiter.find(session[:recruiter_id])
       else
-        session[:employer_id] = nil # Invalid session[:employer_id]
-        @current_employer = nil
+        session[:recruiter_id] = nil # Invalid session[:recruiter_id]
+        @current_recruiter = nil
       end
     end
-    @current_employer
+    @current_recruiter
   end
-  helper_method :current_employer
+  helper_method :current_recruiter
+
+  def current_candidate
+    if session[:candidate_id]
+      if candidate.find_by_id(session[:candidate_id])
+        @current_candidate ||= candidate.find(session[:candidate_id])
+      else
+        session[:candidate_id] = nil # Invalid session[:candidate_id]
+        @current_candidate = nil
+      end
+    end
+    @current_candidate
+  end
+  helper_method :current_candidate
 end
