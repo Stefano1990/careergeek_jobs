@@ -1,5 +1,5 @@
 class Job < ActiveRecord::Base
-  attr_accessible :about_this_job, :requirements, :how_to_apply, :location, :start_date, :title, :category_id, :application_deadline, :employer
+  attr_accessible :about_this_job, :requirements, :how_to_apply, :location, :start_date, :title, :category_id, :application_deadline, :recruiter
 
   belongs_to      :recruiter
   belongs_to      :category
@@ -13,7 +13,7 @@ class Job < ActiveRecord::Base
     end
   end
 
-  def blank_employer?
-    employer_id == 0
+  def blank_recruiter?
+    recruiter_id == 0
   end
 end

@@ -22,51 +22,51 @@ class JobsController < ApplicationController
   def create
     # Employer is logged in:
     @job = Job.new(params[:job])
-    if current_employer
-      @job.employer = current_employer
+    if current_recruiter
+      @job.recruiter = current_recruiter
     else
-      @job.employer_id = 0
+      @job.recruiter_id = 0
     end
 
     if @job.save
-      if @job.blank_employer?
-        redirect_to job_choose_employer_path(@job), flash: { success: "Job was created." }
+      if @job.blank_recruiter?
+        redirect_to job_choose_recruiter_path(@job), flash: { success: "Job was created." }
       else
         redirect_to job_path(@job)
       end
     else
       render "new"
     end
-    #if current_employer
-    #  @employer = current_employer
+    #if current_recruiter
+    #  @recruiter = current_recruiter
     #else
-    #  # The employer either logs in or creates a new employer
-    #  unless params[:job][:employer][:email].blank?
-    #    # The user is trying to log in with an existing employer profile
-    #    @found_employer = Employer.find_by_email(params[:job][:employer][:email])
-    #    if @found_employer && @found_employer.authenticate(params[:job][:employer][:password])
-    #      @employer = @found_employer
-    #      session[:employer_id] = @found_employer.id # Log the employer in at the same time.
+    #  # The recruiter either logs in or creates a new recruiter
+    #  unless params[:job][:recruiter][:email].blank?
+    #    # The user is trying to log in with an existing recruiter profile
+    #    @found_recruiter = Employer.find_by_email(params[:job][:recruiter][:email])
+    #    if @found_recruiter && @found_recruiter.authenticate(params[:job][:recruiter][:password])
+    #      @recruiter = @found_recruiter
+    #      session[:recruiter_id] = @found_recruiter.id # Log the recruiter in at the same time.
     #    else
-    #      flash.now[:error] = t("jobs.create.employer_not_found")
+    #      flash.now[:error] = t("jobs.create.recruiter_not_found")
     #    end
     #  else
-    #    # The user is registering as an employer and entered: email, password & password confirmation
-    #    @new_employer = Employer.new(params[:job][:new_employer])
-    #    if @new_employer.save
+    #    # The user is registering as an recruiter and entered: email, password & password confirmation
+    #    @new_recruiter = Employer.new(params[:job][:new_recruiter])
+    #    if @new_recruiter.save
     #      flash.now[:success] = "Employer saved."
-    #      session[:employer_id] = @new_employer.id # Log the employer in at the same time.
-    #      @employer = @new_employer
+    #      session[:recruiter_id] = @new_recruiter.id # Log the recruiter in at the same time.
+    #      @recruiter = @new_recruiter
     #    else
-    #      flash.now[:error] = "Your employer profile was not saved. Please check your input."
+    #      flash.now[:error] = "Your recruiter profile was not saved. Please check your input."
     #    end
     #  end
     #end
-    ## Remove the employer part from the params:
-    #params[:job].delete :employer # Otherwise rails complains about not being able to mass-assign employer. Which is correct.
+    ## Remove the recruiter part from the params:
+    #params[:job].delete :recruiter # Otherwise rails complains about not being able to mass-assign recruiter. Which is correct.
     #
     #@job = Job.new(params[:job])
-    #@job.employer = @employer
+    #@job.recruiter = @recruiter
     #if @job.save!
     #  redirect_to @job, flash: { success: "Your job was saved." }
     #else
@@ -74,31 +74,35 @@ class JobsController < ApplicationController
     #end
   end
 
-  def choose_employer
+  def choose_recruiter
     @job = Job.find(params[:job_id])
   end
 
   def update
     @job = Job.find(params[:id])
-    @employer = Recruiter.authenticate(params[:job][:employer][:email], params[:job][:employer][:password])
-    if @employer # An employer was not found with that email.
-      @job.employer = @employer
+    @recruiter = Recruiter.authenticate(params[:job][:recruiter][:email], params[:job][:recruiter][:password])
+    if @recruiter # An recruiter was not found with that email.
+      @job.recruiter = @recruiter
       if @job.save
+        session[:recruiter_id] = @recruiter.id # Log the recruiter in at the same time.
         redirect_to job_path(@job), flash: { success: "Job was saved and you were logged in." }
       else
-        render "choose_employer"
+        render "choose_recruiter"
       end
     else
-      @employer = Recruiter.new(params[:job][:new_employer])
-      if @employer.save
+      @recruiter = Recruiter.new(params[:job][:new_recruiter])
+      if @recruiter.save
         flash.now[:success] = "Employer saved."
-        session[:employer_id] = @employer.id # Log the employer in at the same time.
-        @job.employer = @employer
-        @job.save
-        redirect_to job_path(@job), flash: { sucecss: "The job was saved and your employer account was created." }
+        @job.recruiter = @recruiter
+        if @job.save
+          session[:recruiter_id] = @recruiter.id # Log the recruiter in at the same time.
+          redirect_to job_path(@job), flash: { sucecss: "The job was saved and your recruiter account was created." }
+        else
+          render "choose_recruiter"
+        end
       else
         flash.now[:error] = "Employer could not be saved."
-        render "choose_employer"
+        render "choose_recruiter"
       end
     end
   end
